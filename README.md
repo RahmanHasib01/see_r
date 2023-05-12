@@ -1,16 +1,19 @@
 # see_r
 
-A new Flutter project.
 
-## Getting Started
+```
+Final Year Project for BIT at the International islamic University Malaysia.
+```
+--- 
 
-This project is a starting point for a Flutter application.
+# About me
 
-A few resources to get you started if this is your first Flutter project:
+## Rezaur Rahman Hasib
+## 1823141
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+--- 
+## Project description
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+bla bla
+
+
