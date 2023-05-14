@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-//
-class MorePage extends StatefulWidget {
-  const MorePage({Key? key}) : super(key: key);
+class PlaybackPage extends StatefulWidget {
+  const PlaybackPage({Key? key}) : super(key: key);
 
   @override
-  _MorePageState createState() => _MorePageState();
+  _PlaybackPageState createState() => _PlaybackPageState();
 }
 
 void onButtonClicked() {
@@ -21,11 +20,11 @@ void search() {
   // You can replace the print statement with your desired action.
 }
 
-class _MorePageState extends State<MorePage> {
-  int _currentIndex = 0;
+class _PlaybackPageState extends State<PlaybackPage> {
+  int _currentIndex = 2;
 
   void _onTabSelected(int index) {
-    if (index != _currentIndex) {
+    if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
       });
@@ -37,8 +36,8 @@ class _MorePageState extends State<MorePage> {
           Navigator.pushNamed(context, '/home');
           break;
         case 1:
-          // Navigate to the Notifications Page
-          Navigator.pushNamed(context, '/notifications');
+          // Navigate to the Playback Page
+          Navigator.pushNamed(context, '/Playback');
           break;
         case 2:
           // Navigate to the Playback Page
@@ -55,6 +54,7 @@ class _MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Bottom Navigation Bar
       bottomNavigationBar: Container(
         color: const Color.fromARGB(255, 240, 234, 210),
         child: Padding(
@@ -66,7 +66,7 @@ class _MorePageState extends State<MorePage> {
             padding: const EdgeInsets.all(10),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.notifications_rounded, text: 'Notifications'),
+              GButton(icon: Icons.notifications_rounded, text: 'Playback'),
               GButton(icon: Icons.play_circle, text: 'Playback'),
               GButton(icon: Icons.more, text: 'More'),
             ],
@@ -81,7 +81,7 @@ class _MorePageState extends State<MorePage> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/wall.jpg'),
+              image: AssetImage('assets/images/Search.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -123,10 +123,11 @@ class _MorePageState extends State<MorePage> {
                 ],
               ),
 
+              const Padding(padding: EdgeInsets.only(bottom: 250)),
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
-                  'Connect a camera to see if any wanted guests are in ',
+                  'Playback time bois',
                   style: TextStyle(
                       fontFamily: 'opensans',
                       fontSize: 12,
@@ -134,18 +135,7 @@ class _MorePageState extends State<MorePage> {
                       color: Color.fromARGB(255, 100, 79, 56)),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 5, bottom: 10),
-                child: const Text(
-                  'your property',
-                  style: TextStyle(
-                      fontFamily: 'opensans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromARGB(255, 100, 79, 56)),
-                ),
-              ),
+
               // Button
               Align(
                 alignment: const Alignment(0,

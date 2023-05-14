@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:see_r/pages/home_page.dart';
-import 'package:see_r/pages/NotificationsPage.dart';
-import 'package:see_r/pages/MorePage.dart';
-import 'package:see_r/pages/PlaybackPage.dart';
+import 'package:see_r/PlaybackPage.dart';
+import 'package:see_r/home_page.dart';
+import 'package:see_r/MorePage.dart';
+
+import 'NotificationsPage.dart';
 
 void main() => runApp(const MyApp());
 
