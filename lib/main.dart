@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:see_r/pages/home_page.dart';
 
-void main() {
-  return runApp(MaterialApp(
-    title: 'My App',
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text('My App'),
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'See_R',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        useMaterial3: true,
       ),
-      body: Center(
-        child: Text('Hello World'),
-      ),
-    ),
-  ));
+      home: const HomePage(),
+    );
+  }
 }
