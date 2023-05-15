@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
           child: GNav(
             backgroundColor: const Color.fromARGB(255, 240, 234, 210),
+            activeColor: const Color.fromARGB(255, 154, 178, 87),
             color: const Color.fromARGB(155, 100, 56, 1),
-            tabBackgroundColor: const Color.fromARGB(35, 100, 55, 1),
             padding: const EdgeInsets.all(10),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
@@ -191,3 +191,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+// frontend done home
