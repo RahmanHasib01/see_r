@@ -9,6 +9,9 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool darkMode = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +72,48 @@ class _SignupPageState extends State<SignupPage> {
                         ? const Color.fromARGB(255, 168, 172, 125)
                         : const Color.fromARGB(255, 254, 250, 224),
                   ),
-                  child: Icon(
-                    Icons.android,
-                    size: 80,
-                    color: darkMode ? Colors.white : Colors.black,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Password',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              // Perform signup logic here
+                              // Use _emailController.text to access the entered email
+                              // Use _passwordController.text to access the entered password
+                            }
+                          },
+                          child: const Text('Sign Up'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
