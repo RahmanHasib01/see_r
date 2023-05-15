@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+//
+class MorePage extends StatefulWidget {
+  const MorePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MorePageState createState() => _MorePageState();
 }
 
 void onButtonClicked() {
@@ -20,8 +21,7 @@ void search() {
   // You can replace the print statement with your desired action.
 }
 
-//
-class _HomePageState extends State<HomePage> {
+class _MorePageState extends State<MorePage> {
   int _currentIndex = 0;
 
   void _onTabSelected(int index) {
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/Search.jpg'),
+              image: AssetImage('assets/images/wall.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -123,7 +123,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              const Padding(padding: EdgeInsets.only(bottom: 250)),
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
