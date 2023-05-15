@@ -45,13 +45,13 @@ class HomePage extends StatelessWidget {
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Padding(padding: EdgeInsets.only(bottom: 280)),
               // Content above the button
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
-                  'Connect a camera to see if any wanted ',
+                  'Connect a camera to see if any wanted guests are in ',
                   style: TextStyle(
                       fontFamily: 'MyCustomFont',
                       fontSize: 12,
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: const Text(
-                  'guests are in your property',
+                  'your property',
                   style: TextStyle(
                       fontFamily: 'MyCustomFont',
                       fontSize: 12,
