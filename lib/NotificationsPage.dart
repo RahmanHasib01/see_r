@@ -81,7 +81,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/Search.jpg'),
+              image: AssetImage('assets/images/bgimage.jpg'),
               fit: BoxFit.cover,
             ),
           ),

@@ -81,7 +81,7 @@ class _MorePageState extends State<MorePage> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/wall.jpg'),
+              image: AssetImage('assets/images/bgimage.jpg'),
               fit: BoxFit.cover,
             ),
           ),

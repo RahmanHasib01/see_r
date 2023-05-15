@@ -37,7 +37,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
           break;
         case 1:
           // Navigate to the Playback Page
-          Navigator.pushNamed(context, '/Playback');
+          Navigator.pushNamed(context, '/notifications');
           break;
         case 2:
           // Navigate to the Playback Page
@@ -81,7 +81,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/Search.jpg'),
+              image: AssetImage('assets/images/bgimage.jpg'),
               fit: BoxFit.cover,
             ),
           ),
