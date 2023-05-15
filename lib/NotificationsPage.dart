@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:iconsax/iconsax.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -62,13 +63,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
           child: GNav(
             backgroundColor: const Color.fromARGB(255, 240, 234, 210),
             color: const Color.fromARGB(155, 100, 56, 1),
-            tabBackgroundColor: const Color.fromARGB(35, 100, 55, 1),
+            activeColor: const Color.fromARGB(255, 154, 178, 87),
             padding: const EdgeInsets.all(10),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: Icons.notifications_rounded, text: 'Notifications'),
               GButton(icon: Icons.play_circle, text: 'Playback'),
-              GButton(icon: Icons.more, text: 'More'),
+              GButton(icon: Icons.more, text: ' More'),
             ],
             selectedIndex: _currentIndex,
             onTabChange: _onTabSelected,
@@ -96,7 +97,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     padding:
                         const EdgeInsets.only(left: 165, top: 10, bottom: 0),
                     child: const Text(
-                      'HOME',
+                      'NOTIFICATIONS',
                       style: TextStyle(
                         fontFamily: 'opensans',
                         fontSize: 12,
@@ -127,7 +128,21 @@ class _NotificationsPageState extends State<NotificationsPage> {
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
-                  'Notification gang lesgoooo ',
+                  'Unwanted guests are welcomed and listed here ',
+                  style: TextStyle(
+                      fontFamily: 'opensans',
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromARGB(255, 100, 79, 56)),
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.only(
+                  bottom: 5,
+                ),
+                child: const Text(
+                  'along with some wanted notifications.',
                   style: TextStyle(
                       fontFamily: 'opensans',
                       fontSize: 12,
@@ -146,13 +161,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     width: 60,
                     height: 60,
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 100, 79, 56),
+                      color: Color.fromARGB(125, 100, 79, 56),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
-                      Icons.add,
+                      Iconsax.messages_14,
                       size: 40,
-                      color: Colors.white,
+                      color: Color.fromARGB(167, 255, 255, 255),
                     ),
                   ),
                 ),
@@ -178,3 +193,4 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 }
+//frontend noti done
