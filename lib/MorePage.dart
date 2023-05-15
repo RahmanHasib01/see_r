@@ -62,13 +62,13 @@ class _MorePageState extends State<MorePage> {
           child: GNav(
             backgroundColor: const Color.fromARGB(255, 240, 234, 210),
             color: const Color.fromARGB(155, 100, 56, 1),
-            tabBackgroundColor: const Color.fromARGB(35, 100, 55, 1),
+            activeColor: const Color.fromARGB(255, 154, 178, 87),
             padding: const EdgeInsets.all(10),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: Icons.notifications_rounded, text: 'Notifications'),
               GButton(icon: Icons.play_circle, text: 'Playback'),
-              GButton(icon: Icons.more, text: 'More'),
+              GButton(icon: Icons.more, text: ' More'),
             ],
             selectedIndex: _currentIndex,
             onTabChange: _onTabSelected,
