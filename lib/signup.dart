@@ -1,12 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/gestures.dart';
+import 'signin.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
   _SignupPageState createState() => _SignupPageState();
+}
+
+class MyClickableText extends StatelessWidget {
+  const MyClickableText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        text: 'Already have an account?  ',
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 13,
+        ),
+        children: [
+          TextSpan(
+            text: 'Sign in',
+            style: const TextStyle(
+              color: Colors.blue,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Signin()),
+                );
+              },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _SignupPageState extends State<SignupPage> {
@@ -84,25 +119,19 @@ class _SignupPageState extends State<SignupPage> {
                             'Create an account',
                             style: TextStyle(
                               fontFamily: 'opensans',
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.normal,
                               color: Colors.black,
                             ),
                           ),
                         ),
                         const Column(
+                          //
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: 20),
-                              child: Text(
-                                'Already have an account? sign in',
-                                style: TextStyle(
-                                  fontFamily: 'opensans',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                ),
-                              ),
+                              padding: EdgeInsets.only(
+                                  left: 20, right: 20, top: 5, bottom: 15),
+                              child: MyClickableText(),
                             ),
                           ],
                         ),
@@ -160,45 +189,63 @@ class _SignupPageState extends State<SignupPage> {
                                 color: Colors.black,
                               )),
                         ),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 0),
+                          child: TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              labelText: 'Email',
+                              labelStyle: const TextStyle(
                                 color: Colors.black,
+                                fontSize: 12,
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                              ),
-                            ),
-                            labelText: 'Email',
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
                         ),
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 5),
+                          child: TextFormField(
+                            controller: _passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              labelText: 'Password',
+                              labelStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
                         ),
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: const MaterialStatePropertyAll<Size>(
-                              Size(240, 35),
+                              Size(200, 30),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
                               const Color.fromARGB(255, 220, 228, 180),
@@ -216,8 +263,20 @@ class _SignupPageState extends State<SignupPage> {
                             style: TextStyle(
                               color: Color.fromARGB(255, 0, 0, 0),
                               fontFamily: 'opensans',
-                              fontSize: 13,
+                              fontSize: 11,
                               fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const Align(
+                          alignment: FractionalOffset.center,
+                          child: Text(
+                            'By clicking "Get started", you are agreeing to our terms of service and privacy policy',
+                            style: TextStyle(
+                              fontFamily: 'opensans',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w100,
+                              color: Colors.black,
                             ),
                           ),
                         ),
