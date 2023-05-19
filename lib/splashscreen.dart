@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'home_page.dart'; // Replace with your app's home screen
+import 'signup.dart'; // Replace with your app's home screen
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                const HomePage()), // Replace with your app's home screen
+                const SignupPage()), // Replace with your app's home screen
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:see_r/PlaybackPage.dart';
 import 'package:see_r/home_page.dart';
 import 'package:see_r/MorePage.dart';
-import 'package:see_r/signup.dart';
+import 'package:see_r/splashscreen.dart';
 import 'NotificationsPage.dart';
 //pages
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         useMaterial3: true,
       ),
-      home: const SignupPage(),
+      home: const SplashScreen(),
       routes: {
         '/home': (context) => const HomePage(),
         '/notifications': (context) => const NotificationsPage(),
