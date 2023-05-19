@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      title: "Xiaomi Cam App Clone",
+      home: const PlaybackPage(
+          //channel: IOWebSocketChannel.connect('ws://35.235.87.20:65080'),
+          ),
+    );
+  }
+}
+
 class PlaybackPage extends StatefulWidget {
-  const PlaybackPage({Key? key}) : super(key: key);
+  //final WebSocketChannel channel;
+  const PlaybackPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _PlaybackPageState createState() => _PlaybackPageState();
@@ -96,7 +115,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
                     padding:
                         const EdgeInsets.only(left: 165, top: 10, bottom: 0),
                     child: const Text(
-                      'HOME',
+                      'PLAYBACK',
                       style: TextStyle(
                         fontFamily: 'opensans',
                         fontSize: 12,
@@ -123,11 +142,11 @@ class _PlaybackPageState extends State<PlaybackPage> {
                 ],
               ),
 
-              const Padding(padding: EdgeInsets.only(bottom: 250)),
+              const Padding(padding: EdgeInsets.only(bottom: 240)),
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
-                  'Playback time bois',
+                  'Live feed and playback will be available here',
                   style: TextStyle(
                       fontFamily: 'opensans',
                       fontSize: 12,
@@ -150,7 +169,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
-                      Icons.add,
+                      Icons.play_circle_fill,
                       size: 40,
                       color: Colors.white,
                     ),
@@ -162,7 +181,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 10),
                 child: const Text(
-                  'Add devices',
+                  'Nothing to see here yet',
                   style: TextStyle(
                       fontFamily: 'MyCustomFont',
                       fontSize: 12,

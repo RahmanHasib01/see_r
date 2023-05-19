@@ -96,7 +96,7 @@ class _MorePageState extends State<MorePage> {
                     padding:
                         const EdgeInsets.only(left: 165, top: 10, bottom: 0),
                     child: const Text(
-                      'HOME',
+                      'MORE',
                       style: TextStyle(
                         fontFamily: 'opensans',
                         fontSize: 12,
@@ -126,7 +126,7 @@ class _MorePageState extends State<MorePage> {
               Container(
                 alignment: Alignment.bottomCenter,
                 child: const Text(
-                  'Connect a camera to see if any wanted guests are in ',
+                  '',
                   style: TextStyle(
                       fontFamily: 'opensans',
                       fontSize: 12,
@@ -138,7 +138,7 @@ class _MorePageState extends State<MorePage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: const Text(
-                  'your property',
+                  '',
                   style: TextStyle(
                       fontFamily: 'opensans',
                       fontSize: 12,
@@ -160,7 +160,7 @@ class _MorePageState extends State<MorePage> {
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
-                      Icons.add,
+                      Icons.add_a_photo,
                       size: 40,
                       color: Colors.white,
                     ),
@@ -172,7 +172,7 @@ class _MorePageState extends State<MorePage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 10),
                 child: const Text(
-                  'Add devices',
+                  'Profile',
                   style: TextStyle(
                       fontFamily: 'MyCustomFont',
                       fontSize: 12,

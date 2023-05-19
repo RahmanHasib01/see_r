@@ -95,7 +95,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   Container(
                     alignment: Alignment.topCenter,
                     padding:
-                        const EdgeInsets.only(left: 165, top: 10, bottom: 0),
+                        const EdgeInsets.only(left: 145, top: 10, bottom: 0),
                     child: const Text(
                       'NOTIFICATIONS',
                       style: TextStyle(
@@ -107,7 +107,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   ),
                   Container(
                     alignment: Alignment.topRight,
-                    padding: const EdgeInsets.only(left: 150, bottom: 0),
+                    padding: const EdgeInsets.only(left: 120, bottom: 0),
                     child: GestureDetector(
                       onTap: search, // Call the button click handler
                       child: const SizedBox(

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:see_r/PlaybackPage.dart';
 import 'package:see_r/home_page.dart';
 import 'package:see_r/MorePage.dart';
+import 'package:see_r/signup.dart';
 import 'NotificationsPage.dart';
-import 'signup.dart';
 //pages
 
 void main() async {
