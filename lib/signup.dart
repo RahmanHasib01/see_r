@@ -34,7 +34,7 @@ class MyClickableText extends StatelessWidget {
               ..onTap = () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Signin()),
+                  MaterialPageRoute(builder: (context) => const SigninPage()),
                 );
               },
           ),
@@ -74,7 +74,7 @@ class _SignupPageState extends State<SignupPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.only(top: 20, bottom: 50)),
+              const Padding(padding: EdgeInsets.only(top: 30, bottom: 40)),
               Image.asset(
                 'assets/images/logo.png',
                 width: 52,
@@ -92,7 +92,7 @@ class _SignupPageState extends State<SignupPage> {
               Expanded(
                 child: Center(
                   child: Container(
-                    width: 280,
+                    width: 300,
                     height: 500,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
