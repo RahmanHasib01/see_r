@@ -44,6 +44,35 @@ class MyClickableText extends StatelessWidget {
   }
 }
 
+@override
+Widget build(BuildContext context) {
+  return RichText(
+    text: TextSpan(
+      text: 'Already have an account?  ',
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 13,
+      ),
+      children: [
+        TextSpan(
+          text: 'Sign in',
+          style: const TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+          ),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Signin()),
+              );
+            },
+        ),
+      ],
+    ),
+  );
+}
+
 class _SignupPageState extends State<SignupPage> {
   bool darkMode = false;
   final _formKey = GlobalKey<FormState>();
@@ -74,7 +103,7 @@ class _SignupPageState extends State<SignupPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.only(top: 20, bottom: 50)),
+              const Padding(padding: EdgeInsets.only(top: 40, bottom: 20)),
               Image.asset(
                 'assets/images/logo.png',
                 width: 52,
@@ -93,7 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: Center(
                   child: Container(
                     width: 280,
-                    height: 500,
+                    height: 470,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
@@ -187,7 +216,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 0),
+                            padding: EdgeInsets.only(top: 5, bottom: 15),
                             child: Text(
                                 '------------------------   or   ------------------------',
                                 style: TextStyle(
@@ -199,7 +228,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 15, right: 15, bottom: 0),
+                                top: 5, left: 5, right: 5, bottom: 0),
                             child: TextFormField(
                               controller: _emailController,
                               decoration: const InputDecoration(
@@ -219,7 +248,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 15, right: 15, bottom: 20),
+                                top: 5, left: 5, right: 5, bottom: 5),
                             child: TextFormField(
                               controller: _passwordController,
                               obscureText: true,
@@ -241,7 +270,7 @@ class _SignupPageState extends State<SignupPage> {
                           ElevatedButton(
                             style: ButtonStyle(
                               fixedSize: const MaterialStatePropertyAll<Size>(
-                                Size(200, 25),
+                                Size(200, 30),
                               ),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 220, 228, 180),
@@ -264,7 +293,6 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                             ),
                           ),
-                          const Padding(padding: EdgeInsets.all(5)),
                           RichText(
                             textAlign: TextAlign.center,
                             text: const TextSpan(
