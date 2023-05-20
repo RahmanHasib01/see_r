@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '21579583285',
     projectId: 'see-r-36eee',
     storageBucket: 'see-r-36eee.appspot.com',
-    iosClientId: '21579583285-9b5olnb4b95u60cs9dbhmtksfkcc69ir.apps.googleusercontent.com',
+    iosClientId:
+        '21579583285-9b5olnb4b95u60cs9dbhmtksfkcc69ir.apps.googleusercontent.com',
     iosBundleId: 'com.example.seer',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '21579583285',
     projectId: 'see-r-36eee',
     storageBucket: 'see-r-36eee.appspot.com',
-    iosClientId: '21579583285-9b5olnb4b95u60cs9dbhmtksfkcc69ir.apps.googleusercontent.com',
+    iosClientId:
+        '21579583285-9b5olnb4b95u60cs9dbhmtksfkcc69ir.apps.googleusercontent.com',
     iosBundleId: 'com.example.seer',
   );
 }

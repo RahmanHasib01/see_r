@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
+import 'package:see_r/home_page.dart';
 import 'package:see_r/signup.dart';
 
 class SigninPage extends StatefulWidget {
@@ -74,26 +76,31 @@ class _SigninPageState extends State<SigninPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.only(top: 30, bottom: 40)),
-              Image.asset(
-                'assets/images/logo.png',
-                width: 52,
-                height: 51,
-                alignment: Alignment.center,
-              ),
-              Text(
-                'WELCOME BACK TO SEE-R',
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                ),
+              Column(
+                children: [
+                  const Padding(padding: EdgeInsets.only(top: 100, bottom: 0)),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 52,
+                    height: 51,
+                    alignment: const Alignment(0, 0),
+                  ),
+                  Text(
+                    'WELCOME TO SEE-R',
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
               Expanded(
                 child: Center(
                   child: Container(
-                    width: 300,
-                    height: 500,
+                    padding: const EdgeInsets.all(10),
+                    width: 320,
+                    height: 530,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
@@ -187,7 +194,7 @@ class _SigninPageState extends State<SigninPage> {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 0),
+                            padding: EdgeInsets.only(top: 25, bottom: 0),
                             child: Text(
                                 '------------------------   or   ------------------------',
                                 style: TextStyle(
@@ -199,7 +206,7 @@ class _SigninPageState extends State<SigninPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 15, right: 15, bottom: 0),
+                                top: 12, left: 25, right: 25, bottom: 0),
                             child: TextFormField(
                               controller: _emailController,
                               decoration: const InputDecoration(
@@ -219,7 +226,7 @@ class _SigninPageState extends State<SigninPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 15, right: 15, bottom: 20),
+                                top: 0, left: 25, right: 25, bottom: 20),
                             child: TextFormField(
                               controller: _passwordController,
                               obscureText: true,
@@ -238,10 +245,19 @@ class _SigninPageState extends State<SigninPage> {
                               },
                             ),
                           ),
+                          const Column(
+                            //
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, right: 20, top: 5, bottom: 5),
+                              ),
+                            ],
+                          ),
                           ElevatedButton(
                             style: ButtonStyle(
-                              fixedSize: const MaterialStatePropertyAll<Size>(
-                                Size(200, 25),
+                              fixedSize: MaterialStateProperty.all<Size>(
+                                const Size(200, 25),
                               ),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 220, 228, 180),
@@ -252,6 +268,21 @@ class _SigninPageState extends State<SigninPage> {
                                 // Perform Signin logic here
                                 // Use _emailController.text to access the entered email
                                 // Use _passwordController.text to access the entered password
+                                FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                        email: _emailController.text,
+                                        password: _passwordController.text)
+                                    .then((userCredential) {
+                                  // Login successful, navigate to the homepage or desired screen
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const HomePage()),
+                                  );
+                                }).catchError((error) {
+                                  // Handle login error if necessary
+                                  print('Login Error: $error');
+                                });
                               }
                             },
                             child: const Text(
