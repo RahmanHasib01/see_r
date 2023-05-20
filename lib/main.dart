@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:see_r/splashscreen.dart';
+import 'firebase_options.dart';
 //pages
 import 'package:see_r/PlaybackPage.dart';
 import 'package:see_r/home_page.dart';
 import 'package:see_r/MorePage.dart';
-import 'package:see_r/splashscreen.dart';
 import 'NotificationsPage.dart';
 //pages
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-  //await Firebase.initializeApp(
-  //  options: DefaultFirebaseOptions.currentPlatform,
-  //);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
