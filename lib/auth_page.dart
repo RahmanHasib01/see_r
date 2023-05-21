@@ -11,8 +11,15 @@ class AuthPage extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          // User is authenticated, redirect to a signed-in page
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Show a loading indicator while checking authentication state
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasData) {
+          // User is authenticated, redirect to the signed-in page
           return const HomePage();
         } else {
           // User is not authenticated, show the sign-in page

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -22,7 +23,16 @@ void search() {
 }
 
 class _MorePageState extends State<MorePage> {
+  final user = FirebaseAuth.instance.currentUser;
   int _currentIndex = 3;
+  void signoutuser() {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/signin',
+      (route) => false, // Removes all the previous routes
+    );
+  }
 
   void _onTabSelected(int index) {
     if (_currentIndex != index) {
@@ -160,7 +170,7 @@ class _MorePageState extends State<MorePage> {
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
-                      Icons.add_a_photo,
+                      Icons.face_retouching_natural,
                       size: 40,
                       color: Colors.white,
                     ),
@@ -171,13 +181,45 @@ class _MorePageState extends State<MorePage> {
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 10),
-                child: const Text(
-                  'Profile',
-                  style: TextStyle(
+                child: Text(
+                  " ${user!.email!}",
+                  style: const TextStyle(
                       fontFamily: 'MyCustomFont',
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
                       color: Color.fromARGB(255, 100, 79, 56)),
+                ),
+              ),
+
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        animationDuration: const Duration(milliseconds: 1000),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 25),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 220, 228, 180),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signin');
+                      },
+                      child: const Text(
+                        'Log Out',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontFamily: 'opensans',
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

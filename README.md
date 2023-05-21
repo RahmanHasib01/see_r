@@ -18,8 +18,11 @@ to-do
 
 
 - [x] main 4 pages - may 14 & 15
-- [ ] signup login page - may 15 
-- [ ] authentication - may 15
+- [x] signup login page - may 15 
+- [x] authentication - may 21
+- [ ] polishing pages - may 15
+- [ ] profile page 
+- [ ] logout option 
 - [ ] live feed page design - may 16
 - [ ] working live feed  - may 17
 - [ ] rest of the pages - may 18

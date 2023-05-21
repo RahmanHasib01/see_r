@@ -7,6 +7,7 @@ import 'package:see_r/PlaybackPage.dart';
 import 'package:see_r/home_page.dart';
 import 'package:see_r/MorePage.dart';
 import 'NotificationsPage.dart';
+import 'signin.dart';
 //pages
 
 void main() async {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/notifications': (context) => const NotificationsPage(),
         '/playback': (context) => const PlaybackPage(),
         '/more': (context) => const MorePage(),
+        '/signin': (context) => const SigninPage(),
       },
     );
   }
