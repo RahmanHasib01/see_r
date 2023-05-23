@@ -72,7 +72,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
               GButton(icon: Icons.more, text: ' More'),
             ],
             selectedIndex: _currentIndex,
-            onTabChange: _onTabSelected,
+            onTabChange: (index) {
+              _onTabSelected(index);
+            },
           ),
         ),
       ),

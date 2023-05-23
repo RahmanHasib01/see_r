@@ -20,7 +20,6 @@ void search() {
   // You can replace the print statement with your desired action.
 }
 
-//
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
@@ -77,118 +76,120 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      // Bottom Navigation Bar
-
       body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bgimage.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            children: [
-              // Content above the button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/bgimage.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Column(
                 children: [
+                  // Content above the button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        alignment: Alignment.topCenter,
+                        padding: const EdgeInsets.only(
+                            left: 165, top: 10, bottom: 0),
+                        child: const Text(
+                          'HOME',
+                          style: TextStyle(
+                            fontFamily: 'opensans',
+                            fontSize: 12,
+                            color: Color.fromARGB(255, 100, 79, 56),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.topRight,
+                        padding: const EdgeInsets.only(left: 150, bottom: 0),
+                        child: GestureDetector(
+                          onTap: search, // Call the button click handler
+                          child: const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: Icon(
+                              Icons.search,
+                              size: 20,
+                              color: Color.fromARGB(255, 100, 79, 56),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.only(bottom: 250)),
                   Container(
-                    alignment: Alignment.topCenter,
-                    padding:
-                        const EdgeInsets.only(left: 165, top: 10, bottom: 0),
+                    alignment: Alignment.bottomCenter,
                     child: const Text(
-                      'HOME',
+                      'Connect a camera to see if any wanted guests are in ',
                       style: TextStyle(
                         fontFamily: 'opensans',
                         fontSize: 12,
+                        fontWeight: FontWeight.normal,
                         color: Color.fromARGB(255, 100, 79, 56),
                       ),
                     ),
                   ),
                   Container(
-                    alignment: Alignment.topRight,
-                    padding: const EdgeInsets.only(left: 150, bottom: 0),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(top: 5, bottom: 10),
+                    child: const Text(
+                      'your property',
+                      style: TextStyle(
+                        fontFamily: 'opensans',
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Color.fromARGB(255, 100, 79, 56),
+                      ),
+                    ),
+                  ),
+                  // Button
+                  Align(
+                    alignment: const Alignment(0,
+                        0.1), // Adjust the y-axis value to move the button up or down
                     child: GestureDetector(
-                      onTap: search, // Call the button click handler
-                      child: const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: Icon(
-                          Icons.search,
-                          size: 20,
+                      onTap: onButtonClicked, // Call the button click handler
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 100, 79, 56),
+                          shape: BoxShape.circle,
                         ),
+                        child: const Icon(
+                          Icons.add,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Content below the button
+                  Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(top: 10),
+                    child: const Text(
+                      'Add devices',
+                      style: TextStyle(
+                        fontFamily: 'MyCustomFont',
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Color.fromARGB(255, 100, 79, 56),
                       ),
                     ),
                   ),
                 ],
               ),
-
-              const Padding(padding: EdgeInsets.only(bottom: 250)),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: const Text(
-                  'Connect a camera to see if any wanted guests are in ',
-                  style: TextStyle(
-                      fontFamily: 'opensans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromARGB(255, 100, 79, 56)),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 5, bottom: 10),
-                child: const Text(
-                  'your property',
-                  style: TextStyle(
-                      fontFamily: 'opensans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromARGB(255, 100, 79, 56)),
-                ),
-              ),
-              // Button
-              Align(
-                alignment: const Alignment(0,
-                    0.1), // Adjust the y-axis value to move the button up or down
-                child: GestureDetector(
-                  onTap: onButtonClicked, // Call the button click handler
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 100, 79, 56),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.add,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              // Content below the button
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10),
-                child: const Text(
-                  'Add devices',
-                  style: TextStyle(
-                      fontFamily: 'MyCustomFont',
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Color.fromARGB(255, 100, 79, 56)),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        // body
       ),
     );
   }
 }
-// frontend done home

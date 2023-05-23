@@ -1,42 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      title: "Xiaomi Cam App Clone",
-      home: const PlaybackPage(
-          //channel: IOWebSocketChannel.connect('ws://35.235.87.20:65080'),
-          ),
-    );
-  }
-}
+import 'feedpage.dart';
 
 class PlaybackPage extends StatefulWidget {
-  //final WebSocketChannel channel;
-  const PlaybackPage({
-    Key? key,
-  }) : super(key: key);
+  const PlaybackPage({Key? key}) : super(key: key);
 
   @override
   _PlaybackPageState createState() => _PlaybackPageState();
-}
-
-void onButtonClicked() {
-  // Add your button click logic here.
-  print('Button clicked!');
-  // You can replace the print statement with your desired action.
-}
-
-void search() {
-  // Add your button click logic here.
-  print('Button clicked!');
-  // You can replace the print statement with your desired action.
 }
 
 class _PlaybackPageState extends State<PlaybackPage> {
@@ -68,6 +38,19 @@ class _PlaybackPageState extends State<PlaybackPage> {
           break;
       }
     }
+  }
+
+  void onButtonClicked() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FeedbackPage()),
+    );
+  }
+
+  void search() {
+    // Add your button click logic here.
+    print('Button clicked!');
+    // You can replace the print statement with your desired action.
   }
 
   @override
@@ -160,7 +143,10 @@ class _PlaybackPageState extends State<PlaybackPage> {
                 alignment: const Alignment(0,
                     0.1), // Adjust the y-axis value to move the button up or down
                 child: GestureDetector(
-                  onTap: onButtonClicked, // Call the button click handler
+                  // Call the button click handler
+                  // make a ontab button to go to the pfeedback page
+                  onTap: onButtonClicked,
+
                   child: Container(
                     width: 60,
                     height: 60,
