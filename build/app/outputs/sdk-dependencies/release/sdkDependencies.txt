@@ -486,10 +486,10 @@ library {
   maven_library {
     groupId: "org.jetbrains.kotlin"
     artifactId: "kotlin-stdlib-jdk7"
-    version: "1.6.10"
+    version: "1.7.0"
   }
   digests {
-    sha256: "*\355\315\306\266\2333\275\365\314#[\316\250\216|\366`\021F\273k\315\377\3331+\272\315{\342a"
+    sha256: "\a\351\033\351\262\312 g-+\333~\030\033vnsE:-\2414\222\265\335\256\350\372G\256\2429"
   }
   repo_index {
     value: 1
@@ -683,7 +683,7 @@ library {
 }
 library {
   digests {
-    sha256: "{\237\v)K\324N\201\355\305X\341\373\315\254\371\245\000,Ds\377\300\366V\3260\240X6dx"
+    sha256: "\375\247w\275\272$ \303 \307\221\f\233\177\2373\274,\314+e\350e\241\317\316\361\022^\222\243\225"
   }
 }
 library_dependencies {
@@ -1020,6 +1020,16 @@ repositories {
 repositories {
   maven_repo {
     url: "https://repo.maven.apache.org/maven2/"
+  }
+}
+repositories {
+  maven_repo {
+    url: "https://dl.google.com/dl/android/maven2/"
+  }
+}
+repositories {
+  maven_repo {
+    url: "https://jcenter.bintray.com/"
   }
 }
 repositories {

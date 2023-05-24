@@ -1,4 +1,0 @@
-#Sun May 21 17:35:43 MYT 2023
-base.0=/home/hasib/Vs Projects/see_r/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

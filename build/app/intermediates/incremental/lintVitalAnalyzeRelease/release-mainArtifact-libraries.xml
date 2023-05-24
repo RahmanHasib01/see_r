@@ -30,6 +30,19 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
+      name="/home/hasib/Vs Projects/see_r/android@@:image_gallery_saver::release"
+      jars="/home/hasib/Vs Projects/see_r/build/image_gallery_saver/.transforms/c14422b9c8018f8a3eb3db1e53caa683/transformed/out/jars/classes.jar"
+      resolved="com.example.imagegallerysaver:image_gallery_saver:unspecified"
+      folder="/home/hasib/Vs Projects/see_r/build/image_gallery_saver/.transforms/c14422b9c8018f8a3eb3db1e53caa683/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
       name="/home/hasib/Vs Projects/see_r/android@@:fluttertoast::release"
       jars="/home/hasib/Vs Projects/see_r/build/fluttertoast/.transforms/0c8eb6faf9cc4d1f8184f673f2400937/transformed/out/jars/classes.jar"
       resolved="com.example.FlutterToast:fluttertoast:unspecified"
@@ -111,9 +124,9 @@
       jars="/home/hasib/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.6.0/baf82c475e9372c25407f3d132439e4aa803b8b8/kotlin-stdlib-jdk8-1.6.0.jar"
       resolved="org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0"/>
   <library
-      name="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10@jar"
-      jars="/home/hasib/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.6.10/e1c380673654a089c4f0c9f83d0ddfdc1efdb498/kotlin-stdlib-jdk7-1.6.10.jar"
-      resolved="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10"/>
+      name="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0@jar"
+      jars="/home/hasib/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.7.0/fbeaa8fa63cbab09c547083a449097be6660a9a/kotlin-stdlib-jdk7-1.7.0.jar"
+      resolved="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0"/>
   <library
       name="io.flutter:armeabi_v7a_release:1.0.0-b4fb11214dd2dda6ce012dd98ea498e9e8b91262@jar"
       jars="/home/hasib/.gradle/caches/modules-2/files-2.1/io.flutter/armeabi_v7a_release/1.0.0-b4fb11214dd2dda6ce012dd98ea498e9e8b91262/3d926577a4aae928a50c5e24f61eb84eebb79db2/armeabi_v7a_release-1.0.0-b4fb11214dd2dda6ce012dd98ea498e9e8b91262.jar"
