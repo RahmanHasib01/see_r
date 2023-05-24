@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:gesture_zoom_box/gesture_zoom_box.dart';
-//import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-//import 'package:intl/intl.dart';
-//import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:async';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -42,6 +41,8 @@ class _PlaybackPageState extends State<PlaybackPage> {
   double newVideoSizeHeight = 480;
 
   late bool isLandscape;
+  late String _timestring = '';
+
   int _currentIndex = 2;
 
   void _onTabSelected(int index) {
@@ -79,6 +80,21 @@ class _PlaybackPageState extends State<PlaybackPage> {
   void onPictureButtonClicked() {
     // Add your picture capture logic here
     print('Screenshot button clicked!');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isLandscape = false;
+
+    _timestring = _formatDateTime(DateTime.now());
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
+  }
+
+  @override
+  void dispose() {
+    widget.channel.sink.close();
+    super.dispose();
   }
 
   void onVideoButtonClicked() {
@@ -187,7 +203,8 @@ class _PlaybackPageState extends State<PlaybackPage> {
                 return Align(
                   child: Container(
                     alignment: Alignment.center,
-                    color: Colors.black,
+                    height: newVideoSizeHeight,
+                    width: newVideoSizeWidth,
                     child: StreamBuilder(
                       stream: widget.channel.stream,
                       builder: (context, snapshot) {
@@ -199,16 +216,102 @@ class _PlaybackPageState extends State<PlaybackPage> {
                             ),
                           );
                         } else {
-                          return GestureZoomBox(
-                            maxScale: 5,
-                            doubleTapScale: 2.0,
-                            duration: const Duration(milliseconds: 200),
-                            child: Image.memory(
-                              snapshot.data,
-                              gaplessPlayback: true,
-                              width: newVideoSizeWidth,
-                              height: newVideoSizeHeight,
-                            ),
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                height: isLandscape ? 0 : 0,
+                              ),
+                              Stack(children: [
+                                GestureZoomBox(
+                                  maxScale: 5,
+                                  doubleTapScale: 2.0,
+                                  duration: const Duration(milliseconds: 200),
+                                  child: Image.memory(
+                                    snapshot.data,
+                                    gaplessPlayback: true,
+                                    width: newVideoSizeWidth,
+                                    height: newVideoSizeHeight,
+                                  ),
+                                ),
+                                Positioned.fill(
+                                    child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Column(
+                                    children: <Widget>[
+                                      const Text(
+                                        'ESP32\'s cam',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      Text(
+                                        'Live | $_timestring',
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                              ]),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  color: Colors.black,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 1),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.videocam,
+                                            size: 24,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.photo_camera,
+                                            size: 24,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.mic,
+                                            size: 24,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.speaker,
+                                            size: 24,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.add_alert,
+                                            size: 24,
+                                          ),
+                                          onPressed: () {},
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           );
                         }
                       },
@@ -216,10 +319,10 @@ class _PlaybackPageState extends State<PlaybackPage> {
                   ),
                 );
               }),
-              const Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 10)),
               // Button Row
 // ******************************************* screenshot and record button *******************************************
-              Row(
+              /*          Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
@@ -255,26 +358,24 @@ class _PlaybackPageState extends State<PlaybackPage> {
                     ),
                   ),
                 ],
-              ),
+              ),  */
 
 // ******************************************* Content below the live feed window *******************************************
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10),
-                child: const Text(
-                  'Additional Content',
-                  style: TextStyle(
-                    fontFamily: 'MyCustomFont',
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: Color.fromARGB(255, 100, 79, 56),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('MM/dd hh:mm:ss aaa').format(dateTime);
+  }
+
+  void _getTime() {
+    final DateTime now = DateTime.now();
+    setState(() {
+      _timestring = _formatDateTime(now);
+    });
   }
 }

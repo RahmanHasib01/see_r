@@ -7,7 +7,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gesture_zoom_box/gesture_zoom_box.dart';
 import 'package:intl/intl.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -176,10 +175,12 @@ class _HomeState extends State<Home> {
                                     onPressed: takeScreenShot,
                                   ),
                                   const IconButton(
-                                      icon: Icon(
-                                    Icons.mic,
-                                    size: 24,
-                                  )),
+                                    icon: Icon(
+                                      Icons.mic,
+                                      size: 24,
+                                    ),
+                                    onPressed: () {},
+                                  ),
                                   const IconButton(
                                       icon: Icon(
                                     Icons.speaker,
