@@ -1,207 +1,255 @@
-import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'dart:async';
+import 'dart:ui';
 
-class FeedbackPage extends StatefulWidget {
-  const FeedbackPage({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gesture_zoom_box/gesture_zoom_box.dart';
+import 'package:intl/intl.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  _FeedbackPageState createState() => _FeedbackPageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      title: "Xiaomi Cam App Clone",
+      home: Home(
+        channel: IOWebSocketChannel.connect('ws://35.235.87.20:65080'),
+      ),
+    );
+  }
 }
 
-class _FeedbackPageState extends State<FeedbackPage> {
-  int _currentIndex = 2;
+class Home extends StatefulWidget {
+  final WebSocketChannel channel;
 
-  void _onTabSelected(int index) {
-    if (_currentIndex != index) {
-      setState(() {
-        _currentIndex = index;
-      });
+  const Home({Key key, @required this.channel}) : super(key: key);
 
-      // Navigate to the corresponding page based on the index
-      switch (_currentIndex) {
-        case 0:
-          // Navigate to the Home Page
-          Navigator.pushNamed(context, '/home');
-          break;
-        case 1:
-          // Navigate to the Playback Page
-          Navigator.pushNamed(context, '/notifications');
-          break;
-        case 2:
-          // Navigate to the Live Feed Page
-          Navigator.pushNamed(context, '/playback');
-          break;
-        case 3:
-          // Navigate to the More Page
-          Navigator.pushNamed(context, '/more');
-          break;
-        case 4:
-          // Navigate to the Feedback Page
-          Navigator.pushNamed(context, '/feedback');
-          break;
-      }
-    }
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final double videoWidth = 640;
+  final double videoHeight = 480;
+
+  double newVideoSizeWidth = 640;
+  double newVideoSizeHeight = 480;
+
+  bool isLandscape;
+  String _timeString;
+
+  final _globalKey = GlobalKey();
+  final _imageSaver = ImageSaver();
+
+  @override
+  void initState() {
+    super.initState();
+    isLandscape = false;
+
+    _timeString = _formatDateTime(DateTime.now());
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
   }
 
-  void onPictureButtonClicked() {
-    // Add your picture capture logic here
-    print('Picture button clicked!');
-  }
-
-  void onVideoButtonClicked() {
-    // Add your video recording logic here
-    print('Video button clicked!');
+  @override
+  void dispose() {
+    widget.channel.sink.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Bottom Navigation Bar
-      bottomNavigationBar: Container(
-        color: const Color.fromARGB(255, 240, 234, 210),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-          child: GNav(
-            backgroundColor: const Color.fromARGB(255, 240, 234, 210),
-            color: const Color.fromARGB(155, 100, 56, 1),
-            activeColor: const Color.fromARGB(255, 154, 178, 87),
-            padding: const EdgeInsets.all(10),
-            tabs: const [
-              GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.notifications_rounded, text: 'Notifications'),
-              GButton(icon: Icons.play_circle, text: 'Playback'),
-              GButton(icon: Icons.more, text: ' More'),
-            ],
-            selectedIndex: _currentIndex,
-            onTabChange: _onTabSelected,
-          ),
-        ),
-      ),
-      // Bottom Navigation Bar
+      body: OrientationBuilder(builder: (context, orientation) {
+        var screenWidth = MediaQuery.of(context).size.width;
+        var screenHeight = MediaQuery.of(context).size.height;
 
-      body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bgimage.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            children: [
-              // Content above the live feed window
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    alignment: Alignment.topCenter,
-                    padding:
-                        const EdgeInsets.only(left: 165, top: 10, bottom: 0),
-                    child: const Text(
-                      'LIVE FEED',
-                      style: TextStyle(
-                        fontFamily: 'opensans',
-                        fontSize: 12,
-                        color: Color.fromARGB(255, 100, 79, 56),
-                      ),
-                    ),
+        if (orientation == Orientation.portrait) {
+          //screenWidth < screenHeight
+
+          isLandscape = false;
+          newVideoSizeWidth =
+              screenWidth > videoWidth ? videoWidth : screenWidth;
+          newVideoSizeHeight = videoHeight * newVideoSizeWidth / videoWidth;
+        } else {
+          isLandscape = true;
+          newVideoSizeHeight =
+              screenHeight > videoHeight ? videoHeight : screenHeight;
+          newVideoSizeWidth = videoWidth * newVideoSizeHeight / videoHeight;
+        }
+
+        return Container(
+          color: Colors.black,
+          child: StreamBuilder(
+            stream: widget.channel.stream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
-                  Container(
-                    alignment: Alignment.topRight,
-                    padding: const EdgeInsets.only(left: 150, bottom: 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Add your search logic here
-                        print('Search button clicked!');
-                      },
-                      child: const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: Color.fromARGB(255, 100, 79, 56),
+                );
+              } else {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: isLandscape ? 0 : 30,
                         ),
-                      ),
+                        Stack(
+                          children: <Widget>[
+                            RepaintBoundary(
+                              key: _globalKey,
+                              child: GestureZoomBox(
+                                maxScale: 5.0,
+                                doubleTapScale: 2.0,
+                                duration: const Duration(milliseconds: 200),
+                                child: Image.memory(
+                                  snapshot.data,
+                                  gaplessPlayback: true,
+                                  width: newVideoSizeWidth,
+                                  height: newVideoSizeHeight,
+                                ),
+                              ),
+                            ),
+                            Positioned.fill(
+                                child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                children: <Widget>[
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  const Text(
+                                    'ESP32\'s cam',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    'Live | $_timeString',
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
+                            ))
+                          ],
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            color: Colors.black,
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  const IconButton(
+                                      icon: Icon(
+                                    Icons.videocam,
+                                    size: 24,
+                                  )),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.photo_camera,
+                                      size: 24,
+                                    ),
+                                    onPressed: takeScreenShot,
+                                  ),
+                                  const IconButton(
+                                      icon: Icon(
+                                    Icons.mic,
+                                    size: 24,
+                                  )),
+                                  const IconButton(
+                                      icon: Icon(
+                                    Icons.speaker,
+                                    size: 24,
+                                  )),
+                                  const IconButton(
+                                      icon: Icon(
+                                    Icons.add_alert,
+                                    size: 24,
+                                  ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              const Padding(padding: EdgeInsets.only(top: 30)),
-              // Live Feed Window
-              Align(
-                child: Container(
-                  width: 400,
-                  height: 250,
-                  alignment: Alignment.center,
-                  color: Colors.black,
-                  child: const Text(
-                    'Live Feed Window',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(top: 20)),
-              // Button Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: onPictureButtonClicked,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(150, 100, 79, 56),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.camera_alt,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: onVideoButtonClicked,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(150, 100, 79, 56),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.videocam,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              // Content below the live feed window
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 10),
-                child: const Text(
-                  'Additional Content',
-                  style: TextStyle(
-                    fontFamily: 'MyCustomFont',
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: Color.fromARGB(255, 100, 79, 56),
-                  ),
-                ),
-              ),
-            ],
+                  ],
+                );
+              }
+            },
           ),
+        );
+      }),
+      floatingActionButton: _getFab(),
+    );
+  }
+
+  takeScreenShot() async {
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext.findRenderObject();
+    var image = await boundary.toImage();
+    var byteData = await image.toByteData(format: ImageByteFormat.png);
+    var pngBytes = byteData.buffer.asUint8List();
+    final res = await _imageSaver.saveImage(imageBytes: pngBytes);
+
+    Fluttertoast.showToast(
+        msg: res ? "ScreenShot Saved" : "ScreenShot Failure!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('MM/dd hh:mm:ss aaa').format(dateTime);
+  }
+
+  void _getTime() {
+    final DateTime now = DateTime.now();
+    setState(() {
+      _timeString = _formatDateTime(now);
+    });
+  }
+
+  Widget _getFab() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 22),
+      visible: isLandscape,
+      curve: Curves.bounceIn,
+      children: [
+        SpeedDialChild(
+          child: const Icon(Icons.photo_camera),
+          onTap: takeScreenShot,
         ),
-      ),
+        SpeedDialChild(child: const Icon(Icons.videocam), onTap: () {})
+      ],
     );
   }
 }
