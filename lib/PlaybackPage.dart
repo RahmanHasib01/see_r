@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
-
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -233,16 +230,18 @@ class _PlaybackPageState extends State<PlaybackPage> {
                             children: <Widget>[
                               SizedBox(height: isLandscape ? 0 : 0),
                               Stack(children: [
-                                GestureZoomBox(
+                                RepaintBoundary(
                                   key: _globalKey,
-                                  maxScale: 5,
-                                  doubleTapScale: 2.0,
-                                  duration: const Duration(milliseconds: 200),
-                                  child: Image.memory(
-                                    snapshot.data,
-                                    gaplessPlayback: true,
-                                    width: newVideoSizeWidth,
-                                    height: newVideoSizeHeight,
+                                  child: GestureZoomBox(
+                                    maxScale: 5,
+                                    doubleTapScale: 2.0,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: Image.memory(
+                                      snapshot.data,
+                                      gaplessPlayback: true,
+                                      width: newVideoSizeWidth,
+                                      height: newVideoSizeHeight,
+                                    ),
                                   ),
                                 ),
                                 Positioned.fill(
@@ -404,16 +403,9 @@ class _PlaybackPageState extends State<PlaybackPage> {
   takeScreenShot() async {
     RenderRepaintBoundary? boundary =
         _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-    final status = await Permission.storage.request();
-    if (status.isGranted) {
-      // Permission granted, proceed with saving the image
-    } else {
-      // Permission denied, handle accordingly (show error message, request again, etc.)
-    }
-
     if (boundary == null) {
       Fluttertoast.showToast(
-        msg: "Failed to capture",
+        msg: "Failed to capture screenshot",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         backgroundColor: Colors.red,
@@ -438,10 +430,10 @@ class _PlaybackPageState extends State<PlaybackPage> {
     }
 
     Uint8List pngBytes = byteData.buffer.asUint8List();
-    final file = File.fromRawPath(pngBytes);
-    final filePath = await ImageGallerySaver.saveFile(file.path);
+    final res =
+        await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
 
-    if (filePath != null && filePath.isNotEmpty) {
+    if (res['isSuccess']) {
       Fluttertoast.showToast(
         msg: "Screenshot Saved",
         toastLength: Toast.LENGTH_SHORT,
