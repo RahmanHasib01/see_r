@@ -1,13 +1,20 @@
-// ignore_for_file: library_private_types_in_public_api
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:intl/intl.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:gesture_zoom_box/gesture_zoom_box.dart';
-import 'dart:async';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -40,8 +47,13 @@ class _PlaybackPageState extends State<PlaybackPage> {
   double newVideoSizeWidth = 640;
   double newVideoSizeHeight = 480;
 
-  late bool isLandscape;
+  bool isLandscape = false;
+
   late String _timestring = '';
+
+  final GlobalKey _globalKey = GlobalKey();
+
+  final _imageSaver = ImageGallerySaver();
 
   int _currentIndex = 2;
 
@@ -77,18 +89,18 @@ class _PlaybackPageState extends State<PlaybackPage> {
     }
   }
 
-  void onPictureButtonClicked() {
-    // Add your picture capture logic here
-    print('Screenshot button clicked!');
-  }
-
   @override
   void initState() {
     super.initState();
-    isLandscape = false;
-
-    _timestring = _formatDateTime(DateTime.now());
+    // ...
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        isLandscape =
+            MediaQuery.of(context).orientation == Orientation.landscape;
+      });
+    });
   }
 
   @override
@@ -219,11 +231,10 @@ class _PlaybackPageState extends State<PlaybackPage> {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(
-                                height: isLandscape ? 0 : 0,
-                              ),
+                              SizedBox(height: isLandscape ? 0 : 0),
                               Stack(children: [
                                 GestureZoomBox(
+                                  key: _globalKey,
                                   maxScale: 5,
                                   doubleTapScale: 2.0,
                                   duration: const Duration(milliseconds: 200),
@@ -257,7 +268,7 @@ class _PlaybackPageState extends State<PlaybackPage> {
                                   ),
                                 ))
                               ]),
-                              Expanded(
+                              /* Expanded(
                                 flex: 1,
                                 child: Container(
                                   color: Colors.black,
@@ -279,12 +290,11 @@ class _PlaybackPageState extends State<PlaybackPage> {
                                           onPressed: () {},
                                         ),
                                         IconButton(
-                                          icon: const Icon(
-                                            Icons.photo_camera,
-                                            size: 24,
-                                          ),
-                                          onPressed: () {},
-                                        ),
+                                            icon: const Icon(
+                                              Icons.photo_camera,
+                                              size: 24,
+                                            ),
+                                            onPressed: onPictureButtonClicked),
                                         IconButton(
                                           icon: const Icon(
                                             Icons.mic,
@@ -304,13 +314,15 @@ class _PlaybackPageState extends State<PlaybackPage> {
                                             Icons.add_alert,
                                             size: 24,
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            print('clicked0');
+                                          },
                                         )
                                       ],
                                     ),
                                   ),
                                 ),
-                              )
+                              ) */
                             ],
                           );
                         }
@@ -322,50 +334,132 @@ class _PlaybackPageState extends State<PlaybackPage> {
               const Padding(padding: EdgeInsets.only(top: 10)),
               // Button Row
 // ******************************************* screenshot and record button *******************************************
-              /*          Row(
+
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: onPictureButtonClicked,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(150, 100, 79, 56),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.camera_alt,
-                        size: 30,
-                        color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(150, 100, 79, 56),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.photo_camera,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              onPressed: onPictureButtonClicked,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   GestureDetector(
-                    onTap: onVideoButtonClicked,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(150, 100, 79, 56),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.videocam,
-                        size: 30,
-                        color: Colors.white,
+                    onTap: onPictureButtonClicked,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(150, 100, 79, 56),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.videocam,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
-              ),  */
+              ),
 
 // ******************************************* Content below the live feed window *******************************************
             ],
           ),
         ),
       ),
+      floatingActionButton: _getFab(),
     );
+  }
+
+  onPictureButtonClicked() async {
+    await takeScreenShot();
+  }
+
+  takeScreenShot() async {
+    RenderRepaintBoundary? boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      // Permission granted, proceed with saving the image
+    } else {
+      // Permission denied, handle accordingly (show error message, request again, etc.)
+    }
+
+    if (boundary == null) {
+      Fluttertoast.showToast(
+        msg: "Failed to capture",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+
+    ui.Image? image = await boundary.toImage();
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData == null) {
+      Fluttertoast.showToast(
+        msg: "Failed to capture screenshot",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    final file = File.fromRawPath(pngBytes);
+    final filePath = await ImageGallerySaver.saveFile(file.path);
+
+    if (filePath != null && filePath.isNotEmpty) {
+      Fluttertoast.showToast(
+        msg: "Screenshot Saved",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Failed to save screenshot",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
   }
 
   String _formatDateTime(DateTime dateTime) {
@@ -377,5 +471,21 @@ class _PlaybackPageState extends State<PlaybackPage> {
     setState(() {
       _timestring = _formatDateTime(now);
     });
+  }
+
+  Widget _getFab() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 22),
+      visible: isLandscape,
+      curve: Curves.bounceIn,
+      children: [
+        SpeedDialChild(
+          child: const Icon(Icons.photo_camera),
+          onTap: onPictureButtonClicked,
+        ),
+        SpeedDialChild(child: const Icon(Icons.videocam), onTap: () {})
+      ],
+    );
   }
 }
