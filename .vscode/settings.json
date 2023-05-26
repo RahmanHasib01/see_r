@@ -1,3 +1,6 @@
 {
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "cmake.sourceDirectory": "/home/hasib/Vs Projects/see_r/linux",
+    "files.autoSave": "onWindowChange",
+    "workbench.cloudChanges.continueOn": "off"
 }
