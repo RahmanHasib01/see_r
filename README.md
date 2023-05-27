@@ -20,12 +20,16 @@ to-do
 - [x] main 4 pages - may 14 & 15
 - [x] signup login page - may 15 
 - [x] authentication - may 21
-- [ ] polishing pages - may 15
-- [ ] profile page 
-- [ ] logout option 
-- [ ] live feed page design - may 16
-- [ ] working live feed  - may 17
+- [x] polishing pages - may 15
+- [x] profile page 
+- [x] logout option 
+- [x] live feed page design - may 16
+- [x] working live feed  - may 17
+- [x] take photo 
+- [ ] take video
+- [ ] motion detection
+- [ ] polish
 - [ ] rest of the pages - may 18
-- [ ] new features - may (19-30)
+
 
 
